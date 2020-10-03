@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import mapboxgl from "mapbox-gl";
 import Search from "./components/search";
+import ElapsedHours from "./components/elapsedHours"
 import logo from "./logo.svg";
 
 mapboxgl.accessToken =
@@ -41,6 +42,7 @@ class App extends Component {
             Longitude: {this.state.lng} | Latitude: {this.state.lat} | Zoom:{" "}
             {this.state.zoom}
             <Search />
+            <ElapsedHours />
           </div>
           <div
             ref={(el) => (this.mapContainer = el)}
