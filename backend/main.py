@@ -47,11 +47,12 @@ def latLongDist(lat1, long1, lat2, long2):
     c = 2 * atan2(sqrt(a), sqrt(1 - a))
     return R * c
 
-def tick():
-    pass
+def tick(floodMap):
+    return floodMap
 
 if __name__ == "__main__":
-    floodMap = hgtMap([[[4,4],[4,0]],[5,5]])
-    print(floodMap.getAllData)
-    while False:
-        tick()
+    floodMap = hgtMap([[0,1,2],[1,2,3],[3,4,5]])
+
+    tickInterations = 1000
+    for _ in range(tickInterations):
+        floodMap = tick(floodMap)
