@@ -1,11 +1,24 @@
 import React, { Component } from "react";
 
 class Search extends Component {
-  state = {};
+  state = {
+    searchTerm: "",
+  };
+
+  editSearchTerm = (term) => {
+    const searchTerm = term.target.value;
+    this.setState({ searchTerm });
+  };
+
   render() {
     return (
       <div>
-        <label></label>
+        <input
+          placeholder="Search"
+          type="text"
+          value={this.state.term}
+          onChange={this.editSearchTerm}
+        />
       </div>
     );
   }
