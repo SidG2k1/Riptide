@@ -13,14 +13,17 @@ class hgtMap:
         """
         self.data = []
         for row in hgtStartData:
-            self.data.append(map(lambda height: [height, 0], row))
+            toAdd = []
+            for height in row:
+                toAdd.append([height, 0])
+            self.data.append(toAdd)
     def pointToLatLong(self, x, y):
         # TODO
         # x,y are integers
         return [43.4555, -90.4233]
     def latLongToPointApprox(self, lat, long):
         # TODO
-        return [5, 9]
+        return [1, 1]
     def getWater(self, x, y):
         """
         returns the level of water at the point (x, y)
@@ -54,5 +57,6 @@ if __name__ == "__main__":
     floodMap = hgtMap([[0,1,2],[1,2,3],[3,4,5]])
 
     tickInterations = 1000
+    print(floodMap.getWater(0,0))
     for _ in range(tickInterations):
         floodMap = tick(floodMap)
