@@ -17,6 +17,21 @@ class ElapsedHours extends Component{
     };
 
     render() {
+        const marks = [
+            { value: 1 },
+            { value: 2 },
+            { value: 3 },
+            { value: 4 },
+            { value: 5 },
+            { value: 6 },
+            { value: 7 },
+            { value: 8 },
+            { value: 9 },
+            { value: 10 },
+            { value: 11 },
+            { value: 12 },
+            { value: 13 },
+          ];
         return (
             <div>
                 <Slider
@@ -25,9 +40,9 @@ class ElapsedHours extends Component{
                  aria-label={this.sliderLabel}
                  min={1}
                  max={13}
-                 step={1}
                  scale={(x) => (x <= 6 ? x : (x - 1) * 2)}
                  valueLabelDisplay="auto"
+                 marks={marks}
                  onChange={this.handleEvent}
                 />
             </div>
