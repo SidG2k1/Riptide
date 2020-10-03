@@ -38,18 +38,18 @@ class App extends Component {
   render() {
     const menustyle = {
       width: "20%",
-      padding: "15px"
-    }
+      padding: "15px",
+    };
     return (
       <React.Fragment>
         <div>
-          <div className="sidebarStyle" style = {menustyle}>
+          <div className="sidebarStyle" style={menustyle}>
             <Search />
             <ElapsedHours />
             <FloodIntensity />
           </div>
           <div className="infobarStyle">
-          Longitude: {this.state.lng} | Latitude: {this.state.lat} | Zoom:{" "}
+            Longitude: {this.state.lng} | Latitude: {this.state.lat} | Zoom:{" "}
             {this.state.zoom}
           </div>
           <div
