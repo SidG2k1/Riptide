@@ -5,7 +5,7 @@ class hgtMap:
     This class represent an combination of topological conditions and water flood level
     Note, the 'point' (x, y) is data[x][y].
     """
-    def __init__(hgtStartData):
+    def __init__(self, hgtStartData):
         """
         hgtStartData is the source data from the NASA JPL topological data
         This data comes from: https://dds.cr.usgs.gov/srtm/version2_1/SRTM1/
@@ -13,7 +13,7 @@ class hgtMap:
         """
         self.data = []
         for row in hgtStartData:
-            self.data.append(map(lambda height: [height, 0]))
+            self.data.append(map(lambda height: [height, 0], row))
     def pointToLatLong(self, x, y):
         # TODO
         # x,y are integers
@@ -26,7 +26,7 @@ class hgtMap:
         returns the level of water at the point (x, y)
         """
         return self.data[y][x][1]
-    def setWater(self, x, y, waterLevel)
+    def setWater(self, x, y, waterLevel):
         self.data[y][x][1] = waterLevel
     def getAllData(self):
         """
@@ -46,11 +46,12 @@ def latLongDist(lat1, long1, lat2, long2):
     a = sin(dlat / 2)**2 + cos(lat1i) * cos(lat2i) * sin(dlon / 2)**2
     c = 2 * atan2(sqrt(a), sqrt(1 - a))
     return R * c
-    
+
 def tick():
     pass
 
 if __name__ == "__main__":
     floodMap = hgtMap([[[4,4],[4,0]],[5,5]])
-    while True:
+    print(floodMap.getAllData)
+    while False:
         tick()
