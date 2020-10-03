@@ -16,7 +16,7 @@ class Search extends Component {
         <input
           placeholder="Search"
           type="text"
-          value={this.state.term}
+          value={this.state.searchTerm}
           onChange={this.editSearchTerm}
         />
       </div>
