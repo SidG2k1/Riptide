@@ -34,7 +34,7 @@ def getPopulation(hmap):
                 if (x==0) and (y==0):
                     scale= latLongDist(point1[0], point1[1], point2[0], point2[1])
             point = hmap.pointToLatLong(x,y)
-            if hmap.getWater(x,y)<=water_threshold:
+            if hmap.getWater(x,y)<water_threshold:
                 row.append([0, 0])
                 continue
             area = getArea(point[0],point[1])

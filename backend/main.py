@@ -99,8 +99,7 @@ def weight(delta):
 
 
 def tick(floodMap):
-    return floodMap # temp solution
-    deltas = [[0] * floodMap.maxX] * floodMap.maxY
+    deltas = [[0] * (floodMap.maxX + 1)] * (floodMap.maxY + 1)
     for x in range(floodMap.maxX + 1):
         for y in range(floodMap.maxY + 1):
             if floodMap.getWater(x, y) < floodMap.minFloodHeight:
@@ -108,28 +107,27 @@ def tick(floodMap):
             else:
                 # propagate water
                 waterToSpread = floodMap.getWater(x, y)
-                heightSquareSum = 0
+                midHeight = floodMap.getHeight(x, y)
+                weightSum = 0
                 for i in range(x - 1, x + 2):
                     for j in range(y - 1, y + 2):
-                        heightSquareSum += floodMap.getHeight(i, j) ** 2
-                # TODO: distribute the water such that Sum[Delta[H2O]] = 0
-                # Modify deltas (note, Sum[deltas] = 0)
-                """
-                Rules:
-                use weight function to spread into deltas
-                apply deltas onto floodMap
-                any tile (other than centre) can take max 60% of water
-                """
-                """
-                abc
-                def
-                ghi
-                """
-    floodMap.setWater(1, 1, floodMap.getWater(1, 1) - 0.1)
+                        weightSum += weight(floodMap.getHeight(i, j) - midHeight)
+
+                for i in range(x - 1, x + 2):
+                    for j in range(y - 1, y + 2):
+                        if (x == i) and (y == j):
+                            deltas[j][i] = (waterToSpread * weight(0) / weightSum) - waterToSpread
+                        else:
+                            try:
+                                deltas[j][i] = waterToSpread * weight(0) / weightSum
+                            except:
+                                pass
+    for x in range(floodMap.maxX + 1):
+        for y in range(floodMap.maxY + 1):
+            floodMap.setWater(x, y, floodMap.getWater(x, y) + deltas[y][x])
     return floodMap
 
-
-if __name__ == "__main__":
+def main():
     import getPop, jsonify
     fn = './data/N40W074.hgt'
     siz = os.path.getsize(fn)
@@ -143,7 +141,8 @@ if __name__ == "__main__":
     floodLitres = (10 ** 6) * (userSelectedIntensity ** 2)
     floodMap.minFloodHeight = 100
     floodMap.setWater(floodStartLocation[0], floodStartLocation[1], floodLitres)
-    tickInterations = 1000
+    mins = 5
+    tickInterations = 3 * mins
     for _ in range(tickInterations):
         floodMap = tick(floodMap)
 
@@ -151,8 +150,6 @@ if __name__ == "__main__":
     totalPop = getPop.totalPop(pmap)
     totalDamage = getPop.totalDamage(pmap)
     jsonify.jsonify(floodMap, pmap, totalPop, totalDamage)
-    
-    """
-    {peopleDisplaced, [{lat, long, volume}, ...]}
-    {20000, [{40.366, -71.864, 40}, {40.100, -71.764, 3}, {40.866, -71.264, 200}]}
-    """
+
+if __name__ == "__main__":
+    main()
