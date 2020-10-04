@@ -17,13 +17,9 @@ def jsonify(hmap, pmap, totalpop, totaldam):
             
             
     a = {"populationDisplaced": totalpop, "totalDamage": totaldam, "geodata": finalmap}
-    print("end1")
     y = json.dumps(a)
-    print("end2")
-    with open("../data/compiledOutput.json","w+") as outfile:
+    with open("./data/compiledOutput.json","w+") as outfile:
         outfile.write(y)
-        
-    print("end")
         
     return y
 

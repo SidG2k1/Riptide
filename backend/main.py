@@ -1,6 +1,5 @@
 from math import sin, cos, sqrt, atan2, radians
 import os, math, numpy
-import getPop, jsonify
 
 
 class hgtMap:
@@ -51,7 +50,7 @@ class hgtMap:
         if x > 1200: x = 1200
         if y < 0: y = 0
         if x < 0: x = 0
-        return [y, x]  # yes, I know its y,x not x,y. Yes, its correct.
+        return [x, y]  # yes, I know its y,x not x,y. Yes, its correct. # future me, ignrore that
 
     def getHeight(self, x, y):
         """
@@ -131,22 +130,19 @@ def tick(floodMap):
 
 
 if __name__ == "__main__":
-    fn = '../data/N40W074.hgt'
+    import getPop, jsonify
+    fn = './data/N40W074.hgt'
     siz = os.path.getsize(fn)
     dim = int(math.sqrt(siz / 2))
     assert dim * dim * 2 == siz, 'Invalid file size'
     data = numpy.fromfile(fn, numpy.dtype('>i2'), dim * dim).reshape((dim, dim))
-
     floodMap = hgtMap(data.tolist())
 
-    floodStartLocation = floodMap.latLongToPointApprox(40.366, -71.88)
-
+    floodStartLocation = floodMap.latLongToPointApprox(40.366, -73.88)
     userSelectedIntensity = 5  # provided by user (frontend)
     floodLitres = (10 ** 6) * (userSelectedIntensity ** 2)
-    floodMap.minFloodHeight = 10
-
+    floodMap.minFloodHeight = 100
     floodMap.setWater(floodStartLocation[0], floodStartLocation[1], floodLitres)
-
     tickInterations = 1000
     for _ in range(tickInterations):
         floodMap = tick(floodMap)
@@ -155,9 +151,8 @@ if __name__ == "__main__":
     totalPop = getPop.totalPop(pmap)
     totalDamage = getPop.totalDamage(pmap)
     jsonify.jsonify(floodMap, pmap, totalPop, totalDamage)
-
     
     """
-{peopleDisplaced, [{lat, long, volume}, ...]}
-{20000, [{40.366, -71.864, 40}, {40.100, -71.764, 3}, {40.866, -71.264, 200}]}
+    {peopleDisplaced, [{lat, long, volume}, ...]}
+    {20000, [{40.366, -71.864, 40}, {40.100, -71.764, 3}, {40.866, -71.264, 200}]}
     """

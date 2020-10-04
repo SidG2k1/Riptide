@@ -127,3 +127,4 @@ Thumbs.db
 .vscode/settings.json
 data/.fuse_hidden*
 backend/__pycache__/*
+data/compiledOutput.json
