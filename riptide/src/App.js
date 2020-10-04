@@ -1033,23 +1033,23 @@ class App extends Component {
 
     this.globalMap = map;
 
-    map.on("load", () => {
-      map.addSource("source_circle_500", {
-        type: "geojson",
-        data: {
-          type: "FeatureCollection",
-          features: [
-            {
-              type: "Feature",
-              geometry: {
-                type: "Point",
-                coordinates: [-80.4623, 43.2464],
-              },
-            },
-          ],
-        },
-      });
-    });
+    // map.on("load", () => {
+    //   map.addSource("source_circle_500", {
+    //     type: "geojson",
+    //     data: {
+    //       type: "FeatureCollection",
+    //       features: [
+    //         {
+    //           type: "Feature",
+    //           geometry: {
+    //             type: "Point",
+    //             coordinates: [-80.4623, 43.2464],
+    //           },
+    //         },
+    //       ],
+    //     },
+    //   });
+    // });
 
     map.on("move", () => {
       this.setState({
@@ -1069,46 +1069,59 @@ class App extends Component {
     );
   }
 
-  handleRender = (arr) => {
-    const allPoints = arr.map((point) => ({
-      type: "Feature",
-      geometry: {
-        type: "Point",
-        coordinates: { ...point },
-      },
-    }));
+  allPoints = this.points.map((point) => ({
+    type: "Feature",
+    geometry: {
+      type: "Point",
+      coordinates: { ...point },
+    },
+  }));
 
+  handleRender = () => {
     let map = this.globalMap;
 
-    map.addLayer({
-      id: "circle500",
-      type: "circle",
-      source: {
-        type: "geojson",
-        data: {
-          type: "FeatureCollection",
-          features: allPoints,
+    if (this.globalMap.getLayer("circle500") == undefined) {
+      map.addLayer({
+        id: "circle500",
+        type: "circle",
+        source: {
+          type: "geojson",
+          data: {
+            type: "FeatureCollection",
+            features: this.allPoints,
+          },
         },
-      },
-      // source: "source_circle_500",
-      layout: {
-        visibility: "visible",
-      },
-      paint: {
-        "circle-radius": {
-          stops: [
-            [0, 1],
-            [1, 1],
-            [3, 2],
-            [5, 5],
-            [10, 20],
-            [15, 35],
-          ],
-          base: 1.3,
+        // source: "source_circle_500",
+        layout: {
+          visibility: "visible",
         },
-        "circle-color": "rgba(10,255,10,0.5)",
-      },
-    });
+        paint: {
+          "circle-radius": {
+            stops: [
+              [0, 1],
+              [1, 1],
+              [3, 2],
+              [5, 5],
+              [10, 20],
+              [15, 35],
+            ],
+            base: 1.3,
+          },
+          "circle-color": "rgba(10,255,10,0.5)",
+        },
+      });
+    }
+  };
+
+  //https://docs.mapbox.com/mapbox-gl-js/api/map/#map#addsource
+
+  handleDelete = () => {
+    if (this.globalMap.getLayer("circle500") != undefined) {
+      this.globalMap.removeLayer("circle500");
+    }
+    if (this.globalMap.getSource("circle500") != undefined) {
+      this.globalMap.removeSource("circle500");
+    }
   };
 
   handleClick() {}
@@ -1128,7 +1141,8 @@ class App extends Component {
             <h5 className="center low">Flood Intensity</h5>
             <FloodIntensity />
             <span className="center-place">
-              <Button onRender={() => this.handleRender(this.points)} />
+              <Button onRender={() => this.handleRender()} />
+              <Button onRender={() => this.handleDelete()} />
             </span>
           </div>
           <div className="infobarStyle">
