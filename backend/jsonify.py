@@ -5,6 +5,8 @@ def jsonify(hmap, pmap, totalpop):
     finalmap=[]
     for x in range(len(data)):
         for y in range(len(data[x])):
+            if (x+y%5!=0):
+                continue
             ftuple={}
             point = hmap.pointToLatLong(x, y)
             ftuple["Longitude"] = point[1]
@@ -18,5 +20,3 @@ def jsonify(hmap, pmap, totalpop):
     with open("test.json","w+") as outfile:
         outfile.write(y)
     return y
-
-
