@@ -1,3 +1,4 @@
+from main import latLongDist
 def getArea(lat, long):
     if (long>74.048724):
         #Staten Island
