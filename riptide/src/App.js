@@ -16,6 +16,7 @@ class App extends Component {
     lng: 0,
     lat: 0,
     zoom: 2,
+    searchTerm: "",
   };
 
   globalMap;
