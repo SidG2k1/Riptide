@@ -20,7 +20,7 @@ def getPopulation(hmap):
     populationDensity=[3100.5,12704.1,7935.74,26821.4,13656]
     pmap =[]
     scale = 0.0001
-    water_threshold = 3
+    water_threshold = hmap.minFloodHeight
     data = hmap.getAllData()
     for x in range(len(data)):
         row=[]
@@ -32,7 +32,7 @@ def getPopulation(hmap):
             point = hmap.pointToLatLong(x,y)
             if hmap.getWater(x,y)<=water_threshold:
                 row.append(0)
-                continue;
+                continue
             area = getArea(point[0],point[1])
             pop = populationDensity[area]*scale
             row.append(pop)

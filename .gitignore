@@ -126,4 +126,4 @@ lerna-debug.log
 Thumbs.db
 .vscode/settings.json
 data/.fuse_hidden*
-backend/__pycache__/main.cpython-38.pyc
+backend/__pycache__/*

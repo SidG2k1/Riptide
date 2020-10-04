@@ -129,13 +129,13 @@ def tick(floodMap):
 
 if __name__ == "__main__":
 
-    fn = 'N40W073.hgt'
+    fn = '../data/N40W074.hgt'
     siz = os.path.getsize(fn)
     dim = int(math.sqrt(siz / 2))
     assert dim * dim * 2 == siz, 'Invalid file size'
     data = numpy.fromfile(fn, numpy.dtype('>i2'), dim * dim).reshape((dim, dim))
 
-    floodMap = hgtMap(data)
+    floodMap = hgtMap(data.tolist())
     pmap = getPop.getPopulation(floodMap)
     dmap = getPop.getDamageCosts(floodMap, pmap)
     totalPop = getPop.totalPop(pmap)
