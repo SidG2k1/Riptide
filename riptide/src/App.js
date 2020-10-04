@@ -21,6 +21,34 @@ class App extends Component {
 
   globalMap;
 
+  exampleJSON = {
+    populationDisplaced: 16,
+    totalDamage: 2500,
+    geodata: [
+      {
+        Longitude: -74.0,
+        Latitude: 40.0,
+        Volume: 0,
+        populationDisplaced: 1,
+        damage: 200,
+      },
+      {
+        Longitude: -73.9991673605329,
+        Latitude: 40.0,
+        Volume: 0,
+        populationDisplaced: 2,
+        damage: 300,
+      },
+      {
+        Longitude: -73.99833472106577,
+        Latitude: 40.0,
+        Volume: 0,
+        populationDisplaced: 3,
+        damage: 300,
+      },
+    ],
+  };
+
   points = [
     [-73.7954, 40.6378],
     [-73.7951, 40.6376],
@@ -523,6 +551,11 @@ class App extends Component {
     [-73.7959, 40.6377],
     [-73.7955, 40.6379],
   ];
+
+  function jsonParser(jsonObj) {
+    obj = JSON.parse(jsonObj);
+
+  }
 
   componentDidMount() {
     const map = new mapboxgl.Map({
