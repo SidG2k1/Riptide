@@ -87,7 +87,7 @@ def latLongDist(lat1, long1, lat2, long2):
     return R * c
 
 def weight(delta):
-    return 1.0 / ((-1 if delta < 0 else 1) * delta**2 + 10)
+    return 1.0 / (1 + 2.71828**(-1 * delta / 3))
 
 def tick(floodMap):
     deltas = [[0] * floodMap.maxX] * floodMap.maxY
