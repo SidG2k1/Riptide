@@ -4,8 +4,8 @@ class hgtMap:
     """
     This class represent an combination of topological conditions and water flood level
     Note, the 'point' (x, y) is data[x][y].
-    """
-    """
+    
+
     Diagram showing how to interpret (x, y) <--> (lat, long):
 
     Lat
@@ -35,14 +35,20 @@ class hgtMap:
 
         self.minFloodHeight = 0
     def pointToLatLong(self, x, y):
-        # TODO
         # x,y are integers
         deltaX = x * 1.0 / 1201
         deltaY = y * 1.0 / 1201
-        return [40 + deltaX, -74 + deltaY]
+        if y > 1: y = 1
+        if x > 1: x = 1
+        return [41 - deltaY, -(73 + deltaX)]
     def latLongToPointApprox(self, lat, long):
-        # TODO
-        return [1, 1]
+        y = (int) (-1201 * (lat - 41))
+        x = (int) (-1201 * (long + 73))
+        if y > 1200: y = 1200
+        if x > 1200: x = 1200
+        if y < 0: y = 0
+        if x < 0: x = 0
+        return [y, x] # yes, I know its y,x not x,y. Yes, its correct.
     def getHeight(self, x, y):
         """
         returns the topological height at (x, y)

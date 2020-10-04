@@ -125,4 +125,5 @@ lerna-debug.log
 .DS_Store
 Thumbs.db
 .vscode/settings.json
-data/.fuse_hidden00008daf00000003
+data/.fuse_hidden*
+backend/__pycache__/main.cpython-38.pyc
