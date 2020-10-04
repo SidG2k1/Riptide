@@ -9,65 +9,21 @@ import "@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css";
 
 mapboxgl.accessToken =
   "pk.eyJ1IjoibXJ1Z2FuazA5IiwiYSI6ImNrZmx5dzFiazB5azYyeHF1ZzRncHhjNGEifQ.ZJisPtGi4p3k9U5RU-aj6A";
-// Abbiram's token: "pk.eyJ1IjoiYTZyYW1hbmEiLCJhIjoiY2tmc3loYTZvMGw5cDJ5cWcxNG5mcWR0ayJ9.qI5lnaQPLtsRUAz-LKLihg";
 
 class App extends Component {
   state = {
     lng: 0,
     lat: 0,
     zoom: 2,
-    searchTerm: "",
+    elapsedTime: 0,
+    intensity: 0,
+    populationDisplaced: 0,
+    totalDamage: 0,
   };
 
   globalMap;
-
-  exampleJSON = {
-    populationDisplaced: 16,
-    totalDamage: 2500,
-    geodata: [
-      {
-        Longitude: -74.0,
-        Latitude: 40.0,
-        Volume: 0,
-        populationDisplaced: 1,
-        damage: 200,
-      },
-      {
-        Longitude: -73.9991673605329,
-        Latitude: 40.0,
-        Volume: 0,
-        populationDisplaced: 2,
-        damage: 300,
-      },
-      {
-        Longitude: -73.99833472106577,
-        Latitude: 40.0,
-        Volume: 0,
-        populationDisplaced: 3,
-        damage: 300,
-      },
-    ],
-  };
-
   points = [];
   allPoints = [];
-
-  jsonParser(jsonObj) {
-    let stringyObj = JSON.stringify(jsonObj);
-    const obj = JSON.parse(stringyObj);
-    let geodata = obj.geodata;
-    geodata.forEach((dataPoint) => {
-      this.points.push([dataPoint.Longitude, dataPoint.Latitude]);
-    });
-
-    this.allPoints = this.points.map((point) => ({
-      type: "Feature",
-      geometry: {
-        type: "Point",
-        coordinates: { ...point },
-      },
-    }));
-  }
 
   componentDidMount() {
     const map = new mapboxgl.Map({
@@ -97,6 +53,28 @@ class App extends Component {
     );
   }
 
+  jsonParser(jsonFile) {
+    obj = JSON.parse(JSON.stringify(jsonFile));
+    let geodata = obj.geodata;
+    geodata.forEach((dataPoint) => {
+      this.points.push([dataPoint.Longitude, dataPoint.Latitude]);
+    });
+
+    this.allPoints = this.points.map((point) => ({
+      type: "Feature",
+      geometry: {
+        type: "Point",
+        coordinates: { ...point },
+      },
+    }));
+
+    const populationDisplaced = obj.populationDisplaced;
+    this.setState({ populationDisplaced });
+
+    const totalDamage = obj.totalDamage;
+    this.setState({ totalDamage });
+  }
+
   handleRender = () => {
     let map = this.globalMap;
 
@@ -107,7 +85,11 @@ class App extends Component {
       this.globalMap.removeSource("circle500");
     }
 
-    this.jsonParser(this.exampleJSON);
+    this.jsonParser(
+      fetch(url).then((response) => {
+        return response.json();
+      })
+    );
 
     map.addLayer({
       id: "circle500",
@@ -129,8 +111,8 @@ class App extends Component {
             [1, 1],
             [3, 2],
             [5, 5],
-            [10, 20],
-            [15, 35],
+            [10, 50],
+            [15, 75],
           ],
           base: 1.3,
         },
@@ -139,7 +121,15 @@ class App extends Component {
     });
   };
 
-  //https://docs.mapbox.com/mapbox-gl-js/api/map/#map#addsource
+  handleTime = (event, value) => {
+    const elapsedTime = value;
+    this.setState({ elapsedTime });
+  };
+
+  handleIntensity = (event, value) => {
+    const intensity = value;
+    this.setState({ intensity });
+  };
 
   render() {
     const menustyle = {
@@ -152,9 +142,15 @@ class App extends Component {
         <div>
           <div className="sidebarStyle" style={menustyle}>
             <h5 className="center low">Elapsed Minutes</h5>
-            <ElapsedHours />
+            <ElapsedHours onTime={this.handleTime} />
             <h5 className="center low">Flood Intensity</h5>
-            <FloodIntensity />
+            <FloodIntensity onIntensity={this.handleIntensity} />
+            <h5 className="center low">
+              Population Displaced: {this.state.populationDisplaced}
+            </h5>
+            <h5 className="center low">
+              Total Est. Damage: ${this.state.totalDamage}
+            </h5>
             <span className="center-place">
               <Button onRender={() => this.handleRender()} />
             </span>

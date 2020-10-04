@@ -4,20 +4,6 @@ import { createMuiTheme } from "@material-ui/core/styles";
 import { ThemeProvider } from "@material-ui/styles";
 
 class ElapsedHours extends Component {
-  state = {
-    elapsed: 0,
-    sliderLabel: "Elapsed Hours",
-  };
-
-  valuetext(value) {
-    return value;
-  }
-
-  handleEvent = (event, value) => {
-    const elapsed = value;
-    this.setState({ elapsed });
-  };
-
   muiTheme = createMuiTheme({
     overrides: {
       MuiSlider: {
@@ -66,7 +52,7 @@ class ElapsedHours extends Component {
             step={10}
             valueLabelDisplay="off"
             marks={marks}
-            onChange={this.handleEvent}
+            onChange={this.props.onTime}
           />
         </ThemeProvider>
       </div>

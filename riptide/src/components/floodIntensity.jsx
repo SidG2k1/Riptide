@@ -4,17 +4,6 @@ import { createMuiTheme } from "@material-ui/core/styles";
 import { ThemeProvider } from "@material-ui/styles";
 
 class FloodIntensity extends Component {
-  state = {
-    sliderLabel: "Flood Intensity",
-    intensity: 0,
-  };
-
-  handleChange = (event, value) => {
-    const intensity = value;
-    console.log(intensity);
-    this.setState({ intensity });
-  };
-
   muiTheme = createMuiTheme({
     overrides: {
       MuiSlider: {
@@ -62,7 +51,7 @@ class FloodIntensity extends Component {
             min={1}
             max={10}
             valueLabelDisplay="off"
-            onChange={this.handleChange}
+            onChange={this.props.onIntensity}
           />
         </ThemeProvider>
       </div>
