@@ -23,7 +23,7 @@
 .infobarStyle {
   display: inline-block;
   position: absolute;
-  bottom: 0;
+  bottom: 2%;
   right: 0;
   margin: 12px;
   background-color: #404040;
