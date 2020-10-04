@@ -3,7 +3,8 @@ import mapboxgl from "mapbox-gl";
 import Search from "./components/search";
 import ElapsedHours from "./components/elapsedHours";
 import FloodIntensity from "./components/floodIntensity";
-import logo from "./logo.svg";
+import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
+import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
 
 mapboxgl.accessToken =
   "pk.eyJ1IjoiYTZyYW1hbmEiLCJhIjoiY2tmc3loYTZvMGw5cDJ5cWcxNG5mcWR0ayJ9.qI5lnaQPLtsRUAz-LKLihg";
@@ -21,7 +22,7 @@ class App extends Component {
   componentDidMount() {
     const map = new mapboxgl.Map({
       container: this.mapContainer,
-      style: "mapbox://styles/mapbox/streets-v11",
+      style: "mapbox://styles/mapbox/light-v10",
       center: [this.state.lng, this.state.lat],
       zoom: this.state.zoom,
     });
@@ -33,6 +34,13 @@ class App extends Component {
         zoom: map.getZoom().toFixed(2),
       });
     });
+
+    map.addControl(
+      new MapboxGeocoder({
+      accessToken: mapboxgl.accessToken,
+      mapboxgl: mapboxgl
+      })
+      );
   }
 
   render() {
@@ -44,7 +52,6 @@ class App extends Component {
       <React.Fragment>
         <div>
           <div className="sidebarStyle" style={menustyle}>
-            <Search />
             <ElapsedHours />
             <FloodIntensity />
           </div>
