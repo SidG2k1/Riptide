@@ -30,7 +30,8 @@ def getPopulation(hmap):
                 scale= latLongDist(point1[0], point1[1], point2[0], point2[1])
             point = hmap.pointToLatLong(x,y)
             if hmap.getWater(x,y)<=water_threshold:
-                continue
+                row.append(0)
+                continue;
             area = getArea(point[0],point[1])
             pop = populationDensity[area]*scale
             row.append(pop)
@@ -49,3 +50,17 @@ def getDamageCosts(hmap,pmap):
             row.append(damage)
         dmap.append(row)
     return dmap
+
+def totalPop(pmap):
+    sum=0 
+    for x in range(len(pmap)):
+        for y in range(len(pmap[x])):
+            sum+=pmap[x][y]
+    return sum
+
+def totalDamage(dmap):
+    sum=0
+    for x in range(len(dmap)):
+        for y in range(len(dmap[x])):
+            sum+=dmap[x][y]
+    return sum
