@@ -552,9 +552,8 @@ class App extends Component {
     [-73.7955, 40.6379],
   ];
 
-  function jsonParser(jsonObj) {
-    obj = JSON.parse(jsonObj);
-
+  jsonParser(jsonObj) {
+    const obj = JSON.parse(jsonObj);
   }
 
   componentDidMount() {
