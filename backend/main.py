@@ -33,11 +33,13 @@ class hgtMap:
         self.maxX = len(hgtStartData[0]) - 1
         self.maxY = len(hgtStartData) - 1
 
-        self.minFloodHeight = 0 # TODO determine later
+        self.minFloodHeight = 0
     def pointToLatLong(self, x, y):
         # TODO
         # x,y are integers
-        return [43.4555, -90.4233]
+        deltaX = x * 1.0 / 1201
+        deltaY = y * 1.0 / 1201
+        return [40 + deltaX, -74 + deltaY]
     def latLongToPointApprox(self, lat, long):
         # TODO
         return [1, 1]
@@ -91,6 +93,11 @@ def tick(floodMap):
                     for j in range(y - 1, y + 2):
                         heightSquareSum += floodMap.getHeight(i, j)**2
                 # TODO: distribute the water such that Sum[Delta[H2O]] = 0
+                """
+                abc
+                def
+                ghi
+                """
     floodMap.setWater(1, 1, floodMap.getWater(1, 1) - 0.1)
     return floodMap
 
@@ -98,12 +105,19 @@ if __name__ == "__main__":
     floodMap = hgtMap([[0,1,2],[1,2,3],[3,4,5]])
 
     floodStartLocation = floodMap.latLongToPointApprox(40.366, -71.88)
-    floodIntensity = 300
-    floodMap.minFloodHeight = floodIntensity / (1000)
 
-    floodMap.setWater(floodStartLocation[0], floodStartLocation[1], floodIntensity)
+    userSelectedIntensity = 5 # provided by user (frontend)
+    floodLitres = (10**6) * (userSelectedIntensity**2)
+    floodMap.minFloodHeight = 10
+
+    floodMap.setWater(floodStartLocation[0], floodStartLocation[1], floodLitres)
 
     tickInterations = 1000
     for _ in range(tickInterations):
         floodMap = tick(floodMap)
     print(floodMap.getWater(1, 1))
+
+    """
+{peopleDisplaced, [{lat, long, volume}, ...]}
+{20000, [{40.366, -71.864, 40}, {40.100, -71.764, 3}, {40.866, -71.264, 200}]}
+    """

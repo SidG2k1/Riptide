@@ -124,3 +124,5 @@ lerna-debug.log
 # System Files
 .DS_Store
 Thumbs.db
+.vscode/settings.json
+data/.fuse_hidden00008daf00000003

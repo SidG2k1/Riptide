@@ -19,6 +19,7 @@ def getPopulation(hmap):
     populationDensity=[3100.5,12704.1,7935.74,26821.4,13656]
     pmap =[]
     scale = 0.0001
+    water_threshold = 3
     data = hmap.getAllData()
     for x in range(len(data)):
         row=[]
@@ -28,9 +29,23 @@ def getPopulation(hmap):
                 point2 = hmap.pointToLatLong(x,y+1)
                 scale= latLongDist(point1[0], point1[1], point2[0], point2[1])
             point = hmap.pointToLatLong(x,y)
+            if hmap.getWater(x,y)<=water_threshold:
+                continue
             area = getArea(point[0],point[1])
             pop = populationDensity[area]*scale
             row.append(pop)
         pmap.append(row)
     return pmap
 
+def getDamageCosts(hmap,pmap):
+    averageBuildingCosts = [10000, 20000, 30000, 50000, 40000]
+    dmap = []
+    for x in range(len(pmap)):
+        row = []
+        for y in range(len(pmap[x])):
+            point = hmap.pointToLatLong(x, y)
+            area = getArea(point[0],point[1])
+            damage = pmap[x][y]*averageBuildingCosts[area]
+            row.append(damage)
+        dmap.append(row)
+    return dmap
