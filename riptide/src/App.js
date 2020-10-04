@@ -4,7 +4,9 @@ import "./App.css";
 import ElapsedHours from "./components/elapsedHours";
 import FloodIntensity from "./components/floodIntensity";
 import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
+import Button from "./components/button";
 import "@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css";
+
 
 mapboxgl.accessToken =
   "pk.eyJ1IjoiYTZyYW1hbmEiLCJhIjoiY2tmc3loYTZvMGw5cDJ5cWcxNG5mcWR0ayJ9.qI5lnaQPLtsRUAz-LKLihg";
@@ -44,11 +46,14 @@ class App extends Component {
     );
   }
 
+  handleClick() {}
+
   render() {
     const menustyle = {
       width: "26%",
       padding: "20px",
     };
+
     return (
       <React.Fragment>
         <div>
@@ -57,6 +62,7 @@ class App extends Component {
             <ElapsedHours />
             <h5 className="center low">Flood Intensity</h5>
             <FloodIntensity />
+            <Button />
           </div>
           <div className="infobarStyle">
             Longitude: {this.state.lng} | Latitude: {this.state.lat} | Zoom:{" "}
@@ -73,28 +79,3 @@ class App extends Component {
 }
 
 export default App;
-
-/*
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
-
-export default App;
-*/
