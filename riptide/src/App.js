@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import mapboxgl from "mapbox-gl";
-import Search from "./components/search";
+import "./App.css";
 import ElapsedHours from "./components/elapsedHours";
 import FloodIntensity from "./components/floodIntensity";
-import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
-import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
+import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
+import "@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css";
 
 mapboxgl.accessToken =
   "pk.eyJ1IjoiYTZyYW1hbmEiLCJhIjoiY2tmc3loYTZvMGw5cDJ5cWcxNG5mcWR0ayJ9.qI5lnaQPLtsRUAz-LKLihg";
@@ -31,28 +31,31 @@ class App extends Component {
       this.setState({
         lng: map.getCenter().lng.toFixed(4),
         lat: map.getCenter().lat.toFixed(4),
-        zoom: map.getZoom().toFixed(2),
+        zoom: map.getZoom().toFixed(1),
       });
     });
 
     map.addControl(
       new MapboxGeocoder({
-      accessToken: mapboxgl.accessToken,
-      mapboxgl: mapboxgl
+        accessToken: mapboxgl.accessToken,
+        mapboxgl: mapboxgl,
+        marker: false,
       })
-      );
+    );
   }
 
   render() {
     const menustyle = {
-      width: "20%",
-      padding: "15px",
+      width: "26%",
+      padding: "20px",
     };
     return (
       <React.Fragment>
         <div>
           <div className="sidebarStyle" style={menustyle}>
+            <h5 className="center low">Elapsed Minutes</h5>
             <ElapsedHours />
+            <h5 className="center low">Flood Intensity</h5>
             <FloodIntensity />
           </div>
           <div className="infobarStyle">
