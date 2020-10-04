@@ -1,12 +1,10 @@
 from math import sin, cos, sqrt, atan2, radians
 import os, math, numpy
 
-
 class hgtMap:
     """
     This class represent an combination of topological conditions and water flood level
     Note, the 'point' (x, y) is data[x][y].
-
     Diagram showing how to interpret (x, y) <--> (lat, long):
     Lat
     ^
@@ -95,7 +93,7 @@ def latLongDist(lat1, long1, lat2, long2):
 
 
 def weight(delta):
-    return 1.0 / (1 + 2.71828**(-1 * delta / 3))
+    return 1.0 / (1 + 2.71828 ** (-1 * delta / 3))
 
 
 def tick(floodMap):
@@ -129,6 +127,7 @@ def tick(floodMap):
 
 def main():
     import getPop, jsonify
+
     fn = './data/N40W074.hgt'
     siz = os.path.getsize(fn)
     dim = int(math.sqrt(siz / 2))
@@ -148,8 +147,7 @@ def main():
 
     pmap = getPop.getPopulation(floodMap)
     totalPop = getPop.totalPop(pmap)
-    totalDamage = getPop.totalDamage(pmap)
-    jsonify.jsonify(floodMap, pmap, totalPop, totalDamage)
+    jsonify.jsonify(floodMap, pmap, totalPop)
 
-if __name__ == "__main__":
-    main()
+    if __name__ == "__main__":
+        main()
