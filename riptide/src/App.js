@@ -7,7 +7,6 @@ import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
 import Button from "./components/button";
 import "@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css";
 
-
 mapboxgl.accessToken =
   "pk.eyJ1IjoiYTZyYW1hbmEiLCJhIjoiY2tmc3loYTZvMGw5cDJ5cWcxNG5mcWR0ayJ9.qI5lnaQPLtsRUAz-LKLihg";
 
@@ -62,7 +61,9 @@ class App extends Component {
             <ElapsedHours />
             <h5 className="center low">Flood Intensity</h5>
             <FloodIntensity />
-            <Button />
+            <span className="center-place">
+              <Button />
+            </span>
           </div>
           <div className="infobarStyle">
             Longitude: {this.state.lng} | Latitude: {this.state.lat} | Zoom:{" "}

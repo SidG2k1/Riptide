@@ -1,5 +1,11 @@
-.center {
+h5.center {
   text-align: center;
+}
+
+span.center-place {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 0%);
 }
 
 .low {
