@@ -86,7 +86,11 @@ def latLongDist(lat1, long1, lat2, long2):
     c = 2 * atan2(sqrt(a), sqrt(1 - a))
     return R * c
 
+def weight(delta):
+    return 1.0 / ((-1 if delta < 0 else 1) * delta**2 + 10)
+
 def tick(floodMap):
+    deltas = [[0] * floodMap.maxX] * floodMap.maxY
     for x in range(floodMap.maxX + 1):
         for y in range(floodMap.maxY + 1):
             if floodMap.getWater(x, y) < floodMap.minFloodHeight:
@@ -99,6 +103,13 @@ def tick(floodMap):
                     for j in range(y - 1, y + 2):
                         heightSquareSum += floodMap.getHeight(i, j)**2
                 # TODO: distribute the water such that Sum[Delta[H2O]] = 0
+                # Modify deltas (note, Sum[deltas] = 0)
+                """
+                Rules:
+                use weight function to spread into deltas
+                apply deltas onto floodMap
+                any tile (other than centre) can take max 60% of water
+                """
                 """
                 abc
                 def
