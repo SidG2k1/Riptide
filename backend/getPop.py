@@ -18,7 +18,7 @@ def getArea(lat, long):
         return 4
 
 def getPopulation(hmap):
-    populationDensity=[3100.5,12704.1,7935.74,26821.4,13656]
+    populationDensity=[3100.5,12704.1,7935.74,26821.4,13656] # pop/km^2
     averageBuildingCosts = [10000, 20000, 30000, 50000, 40000]
     pmap =[]
 
@@ -28,11 +28,10 @@ def getPopulation(hmap):
     for x in range(len(data)):
         row=[]
         for y in range(len(data[x])):
-            if y<len(data[x])-2:
-                point1 = hmap.pointToLatLong(x,y)
-                point2 = hmap.pointToLatLong(x,y+1)
-                if (x==0) and (y==0):
-                    scale= latLongDist(point1[0], point1[1], point2[0], point2[1])
+            if (x==0) and (y==0):
+                    point1 = hmap.pointToLatLong(0, 0)
+                    point2 = hmap.pointToLatLong(0, 1)
+                    scale = latLongDist(point1[0], point1[1], point2[0], point2[1])
             point = hmap.pointToLatLong(x,y)
             if hmap.getWater(x,y) < water_threshold:
                 row.append([0, 0])

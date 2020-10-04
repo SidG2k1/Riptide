@@ -6,14 +6,17 @@ class hgtMap:
     This class represent an combination of topological conditions and water flood level
     Note, the 'point' (x, y) is data[x][y].
     Diagram showing how to interpret (x, y) <--> (lat, long):
+
+    Y
     Lat
     ^
     | [[1,2,3,4]
     |  [2,3,4,5]
     |  [6,7,8,9]
     |  [7,8,9,0]]
-    L___________> Long
+    L___________> Long X
     note, data[0][0] = 1
+    
     """
 
     def __init__(self, hgtStartData):
@@ -135,13 +138,14 @@ def main():
     data = numpy.fromfile(fn, numpy.dtype('>i2'), dim * dim).reshape((dim, dim))
     floodMap = hgtMap(data.tolist())
 
+
     floodStartLocation = floodMap.latLongToPointApprox(40.366, -73.88)
     userSelectedIntensity = 5  # provided by user (frontend)
     floodLitres = (10 ** 6) * (userSelectedIntensity ** 2)
     floodMap.minFloodHeight = 100
     floodMap.setWater(floodStartLocation[0], floodStartLocation[1], floodLitres)
     mins = 5
-    tickInterations = 3 * mins
+    tickInterations = mins
     for _ in range(tickInterations):
         floodMap = tick(floodMap)
 
