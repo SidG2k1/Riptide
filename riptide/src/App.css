@@ -4,6 +4,7 @@ h5.center {
 
 span.center-place {
   position: absolute;
+  margin-top: 5px;
   left: 50%;
   transform: translate(-50%, 0%);
 }
