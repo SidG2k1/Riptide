@@ -1,4 +1,5 @@
 from main import latLongDist
+
 def getArea(lat, long):
     if (long>74.048724):
         #Staten Island
@@ -18,27 +19,33 @@ def getArea(lat, long):
 
 def getPopulation(hmap):
     populationDensity=[3100.5,12704.1,7935.74,26821.4,13656]
+    averageBuildingCosts = [10000, 20000, 30000, 50000, 40000]
     pmap =[]
+
     scale = 0.0001
     water_threshold = hmap.minFloodHeight
     data = hmap.getAllData()
     for x in range(len(data)):
         row=[]
+        if x%1000==0:
+            print("heyy")
         for y in range(len(data[x])):
             if y<len(data[x])-2:
                 point1 = hmap.pointToLatLong(x,y)
                 point2 = hmap.pointToLatLong(x,y+1)
-                scale= latLongDist(point1[0], point1[1], point2[0], point2[1])
+                if (x==0) and (y==0):
+                    scale= latLongDist(point1[0], point1[1], point2[0], point2[1])
             point = hmap.pointToLatLong(x,y)
             if hmap.getWater(x,y)<=water_threshold:
                 row.append(0)
                 continue
             area = getArea(point[0],point[1])
-            pop = populationDensity[area]*scale
-            row.append(pop)
+            pop = populationDensity[area]*scale,
+            item= [pop,pop*averageBuildingCosts[area]]
+            row.append(item)
         pmap.append(row)
     return pmap
-
+"""
 def getDamageCosts(hmap,pmap):
     averageBuildingCosts = [10000, 20000, 30000, 50000, 40000]
     dmap = []
@@ -47,21 +54,21 @@ def getDamageCosts(hmap,pmap):
         for y in range(len(pmap[x])):
             point = hmap.pointToLatLong(x, y)
             area = getArea(point[0],point[1])
-            damage = pmap[x][y]*averageBuildingCosts[area]
+            damage = pmap[x][y]*1
             row.append(damage)
         dmap.append(row)
     return dmap
-
+"""
 def totalPop(pmap):
-    sum=0 
+    sum=0
     for x in range(len(pmap)):
         for y in range(len(pmap[x])):
-            sum+=pmap[x][y]
+            sum+=pmap[x][y][0]
     return sum
 
 def totalDamage(dmap):
     sum=0
     for x in range(len(dmap)):
         for y in range(len(dmap[x])):
-            sum+=dmap[x][y]
+            sum+=dmap[x][y][1]
     return sum

@@ -2,6 +2,7 @@ from math import sin, cos, sqrt, atan2, radians
 import os, math, numpy
 import getPop, jsonify
 
+
 class hgtMap:
     """
     This class represent an combination of topological conditions and water flood level
@@ -93,8 +94,10 @@ def latLongDist(lat1, long1, lat2, long2):
     c = 2 * atan2(sqrt(a), sqrt(1 - a))
     return R * c
 
+
 def weight(delta):
     return 1.0 / (1 + 2.71828**(-1 * delta / 3))
+
 
 def tick(floodMap):
     return floodMap # temp solution
@@ -128,7 +131,6 @@ def tick(floodMap):
 
 
 if __name__ == "__main__":
-
     fn = '../data/N40W074.hgt'
     siz = os.path.getsize(fn)
     dim = int(math.sqrt(siz / 2))
@@ -136,12 +138,6 @@ if __name__ == "__main__":
     data = numpy.fromfile(fn, numpy.dtype('>i2'), dim * dim).reshape((dim, dim))
 
     floodMap = hgtMap(data.tolist())
-    pmap = getPop.getPopulation(floodMap)
-    dmap = getPop.getDamageCosts(floodMap, pmap)
-    totalPop = getPop.totalPop(pmap)
-    totalDamage = getPop.totalDamage(dmap)
-    jsonify.jsonify(floodMap, pmap, dmap, totalPop, dmap)
-
 
     floodStartLocation = floodMap.latLongToPointApprox(40.366, -71.88)
 
@@ -154,7 +150,12 @@ if __name__ == "__main__":
     tickInterations = 1000
     for _ in range(tickInterations):
         floodMap = tick(floodMap)
-    print(floodMap.getWater(1, 1))
+
+    pmap = getPop.getPopulation(floodMap)
+    totalPop = getPop.totalPop(pmap)
+    totalDamage = getPop.totalDamage(pmap)
+    jsonify.jsonify(floodMap, pmap, totalPop, totalDamage)
+
     
     """
 {peopleDisplaced, [{lat, long, volume}, ...]}
