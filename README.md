@@ -13,7 +13,7 @@ Mrugank Upadhyay
 Abbiram Ramanathan
 
 Back-End:
-Sid Gupta
+Siddharth Gupta
 Dev Parikh
 
 ## Achievements
