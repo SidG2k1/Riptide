@@ -1,0 +1,15 @@
+h5.center {
+  text-align: center;
+}
+
+span.center-place {
+  position: absolute;
+  margin-top: 5px;
+  left: 50%;
+  transform: translate(-50%, 0%);
+}
+
+.low {
+  margin: 3px !important;
+  padding: 0 !important;
+}
