@@ -9,12 +9,10 @@ Riptide is a sophisticated yet elegant web application designed to simulate floo
 ### The team
 
 Front-End:
-Mrugank Upadhyay
-Abbiram Ramanathan
+Mrugank Upadhyay & Abbiram Ramanathan
 
 Back-End:
-Siddharth Gupta
-Dev Parikh
+Siddharth Gupta & Dev Parikh
 
 ## Achievements
 
