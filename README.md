@@ -24,6 +24,9 @@ Determined affects of water damage based on cost of construction and population 
 
 As climate change accelerates the frequency and intensity of floods, understanding how vast amounts of water may harm our infrastructure and people is essential to developing a secure future. Unfortunately, most floods hit developing and underdeveloped nations, those which often lack the resources for emergency preparedness. High-quality flood models have high barriers to entry, making it a luxury for only the nations which can afford it. Our software reduces those barriers as medium-resolution topography data is provided by NASA, we can make models for flood impacts, and provide them to those who need it the most, saving countless lives.
 
+Here is a rendering of a flood simulation in New York City using Riptide:
+![Sample NYC Flood](SampleFloodNYC.png)
+
 ## How We Developed This Project
 
 ### Front-End
